@@ -13,7 +13,7 @@ git clone https://github.com/pridit/docker-arma2oaserver.git
 Make a copy of the three `.example` files, removing this suffix, and modify server configuration with your own preferences.
 
 ```bash
-docker build --build-arg RCON_PASSWORD=changeme -t pridit/arma2oaserver .
+docker build -t arma2oaserver .
 ```
 
 Since `RCON_PASSWORD` is set on build (to populate a configuration file) should this need to be changed in the future you must modify the file ending in `.cfg` within the directory `/arma2oaserver/expansion/battleye` inside the container. As the file is automatically renamed it is not feasible to mount.
@@ -44,17 +44,17 @@ Directories you are going to want to merge from `Arma 2` into `Arma 2 Operation 
 Now that we have a built image and the game data we can start up the container as follows:
 
 ```bash
-docker run -d \
+docker create \
     --name=arma2oaserver \
     --net=host \
     --restart unless-stopped \
-    -v arma2oaserver:/Arma 2 Operation Arrowhead
-    -v $PWD/keys:/Arma 2 Operation Arrowhead/Expansion/Keys \
-    -v $PWD/mpmissions:/Arma 2 Operation Arrowhead/MPMissions \
-    -v $PWD/params:/Arma 2 Operation Arrowhead/params \
-    -v $PWD/basic.cfg:/Arma 2 Operation Arrowhead/basic.cfg \
-    -v $PWD/server.cfg:/Arma 2 Operation Arrowhead/server.cfg \
-    pridit/arma2oaserver
+    -v arma2oaserver:/arma2oa \
+    -v $PWD/keys:/arma2oa/Arma\ 2\ Operation\ Arrowhead/Expansion/Keys \
+    -v $PWD/mpmissions:/arma2oa/Arma\ 2\ Operation\ Arrowhead/MPMissions \
+    -v $PWD/params:/arma2oa/Arma\ 2\ Operation\ Arrowhead/params \
+    -v $PWD/basic.cfg:/arma2oa/Arma\ 2\ Operation\ Arrowhead/basic.cfg \
+    -v $PWD/server.cfg:/arma2oa/Arma\ 2\ Operation\ Arrowhead/server.cfg \
+    arma2oaserver
 ```
 
 ## Attribution

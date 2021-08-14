@@ -35,7 +35,6 @@ RUN winetricks sound=disabled && \
 
 # Install dependencies
 RUN W_OPT_UNATTENDED=1 xvfb-run winetricks \
-		arial \
 		dotnet462 \
 		vcrun2013 \
 		vcrun2017 \
@@ -43,7 +42,7 @@ RUN W_OPT_UNATTENDED=1 xvfb-run winetricks \
 	rm -rf  ~/.cache ~/.config ~/.local /tmp/*
 
 # Copy supervisord.conf
-COPY supervisord.conf /torch-server/supervisord.conf
+COPY supervisord.conf /supervisord.conf
 
 # Start supervisord
-CMD ["supervisord", "-c", "/torch-server/supervisord.conf"]
+CMD ["supervisord", "-c", "/supervisord.conf"]
