@@ -1,14 +1,13 @@
-FROM ubuntu:18.04
+FROM debian:stable-slim
 
 ARG RCON_PASSWORD=secret
 
 VOLUME arma2oaserver
 
 # Download necessary packages
-RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections && \
-    dpkg --add-architecture i386 && \
-    apt-get update && \
-    apt-get install --install-recommends -y \
+RUN dpkg --add-architecture i386 && \
+	apt-get update && \
+	DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y \
 		ca-certificates \
 		cabextract \
 		net-tools \
@@ -16,17 +15,14 @@ RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selectio
 		procps \
 		supervisor \
 		wget \
-		wine-stable \
+		wine \
 		wine32 \
 		wine64 \
 		x11vnc \
 		xauth \
 		xvfb \
 		unzip && \
-	apt-get remove --purge -y && \
-    apt-get clean autoclean && \
-    apt-get autoremove -y && \
-    rm /var/lib/apt/lists/* -r && \
+	apt-get clean && rm -rf /var/lib/apt/lists/* && \
 	ln -s /usr/share/novnc/vnc_lite.html /usr/share/novnc/index.html
 
 # Download Winetricks
