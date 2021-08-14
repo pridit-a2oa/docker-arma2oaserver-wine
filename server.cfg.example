@@ -1,0 +1,121 @@
+/**
+ * ArmA 2 OA Server Configuration
+ *
+ * Global settings
+ */
+
+// The name of the server that shall be displayed in the public server list.
+hostname = "Arma 2 OA Server";
+
+// Password required to connect to the server.
+password = "";
+
+// Password to protect admin access.
+passwordAdmin = "changeme";
+
+// Password required by alternate syntax of serverCommand server-side scripting.
+serverCommandPassword = "changeme";
+
+// Maximum amount of player slots.
+maxPlayers = 40;
+
+// Enables output of dedicated server console into textfile.
+logFile = "server_console.log";
+
+/**
+ * Steam querying
+ */
+
+// These need to be set to ensure public visibility.
+steamPort = 2304;
+steamQueryPort = 2303;
+
+/**
+ * Welcome messages
+ */
+
+// Empty messages "" are used for increasing interval.
+motd[] = {
+    ""
+};
+
+// Time interval (in seconds) between each message.
+motdInterval = 360;
+
+/**
+ * Voting behavior
+ */
+
+// Start mission-voting when X numberOfPlayers connect.
+voteMissionPlayers = 1;
+
+// Percentage of votes needed to confirm a vote.
+voteThreshold = 1.50;
+
+/**
+ * Server behavior
+ */
+
+// Do not allow players with duplicate ids to connect.
+kickDuplicate = 1;
+
+// Force server into LAN mode.
+loopback = 0;
+
+// Verifies .pbos against .bisign files.
+// 0 (disabled),
+// 1 (prefer v2 sigs but accept v1 too).
+// 2 (only v2 sigs are allowed).
+verifySignatures = 2;
+
+// Outdated. If set to 1, player has to use exactly the same -mod= startup parameter as the server.
+equalModRequired = 0;
+
+// If set to 1, Voice over Net will not be available.
+disableVoN = 0;
+
+// If set to 0 then it uses SPEEX codec.
+vonCodec = 0;
+
+// 8kHz is 0-10, 16kHz is 11-20, 32kHz (48kHz) is 21-30.
+vonCodecQuality = 10;
+
+// Missions still run on even after the last player disconnected.
+persistent = 1;
+
+// Set the timestamp format used on each report line in server-side RPT file.
+// Possible values are "none" (default), "short", "full".
+timeStampFormat = "full";
+
+// Server to use BattlEye system
+BattlEye = 1;
+
+/**
+ * Headless client
+ */
+
+localClient[]={"127.0.0.1"};
+headlessClients[]={"127.0.0.1"};
+
+/**
+ * Scripting issues
+ */
+
+onUserConnected = "";
+onUserDisconnected = "";
+doubleIdDetected = "";
+
+/**
+ * Signature verification
+ */
+
+onUnsignedData = "kick (_this select 0)";
+onHackedData = "kick (_this select 0)";
+onDifferentData = "";
+
+/**
+ * Missions
+ */
+
+// An empty Missions class means there will be no mission rotation.
+class Missions {};

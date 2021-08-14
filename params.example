@@ -1,0 +1,5 @@
+-server
+-port=2302
+-config=server.cfg
+-cfg=basic.cfg
+-name=default
