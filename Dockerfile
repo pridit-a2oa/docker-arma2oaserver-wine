@@ -1,7 +1,5 @@
 FROM debian:stable-slim
 
-ARG RCON_PASSWORD=secret
-
 VOLUME arma2oaserver
 
 # Download necessary packages
