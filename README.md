@@ -7,7 +7,7 @@ This repository contains the files required to build an image with the dependenc
 
 ## Setup
 ```bash
-git clone https://github.com/pridit/docker-arma2oaserver.git
+git clone https://github.com/pridit/docker-arma2oaserver-wine.git
 ```
 
 Make a copy of the three `.example` files, removing this suffix, and modify server configuration with your own preferences.
