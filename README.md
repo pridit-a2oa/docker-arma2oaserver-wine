@@ -41,7 +41,7 @@ Directories you are going to want to merge from `Arma 2` into `Arma 2 Operation 
 - AddOns
 - Dta
 
-#### RCON
+### RCON
 
 Before we are finished the last thing to do is create a `beserver.cfg` file, to ensure RCON capability.
 
