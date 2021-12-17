@@ -1,7 +1,5 @@
 FROM debian:stable-slim
 
-VOLUME arma2oaserver
-
 # Download necessary packages
 RUN dpkg --add-architecture i386 && \
 	apt-get update && \
@@ -35,7 +33,7 @@ RUN winetricks sound=disabled && \
 RUN W_OPT_UNATTENDED=1 xvfb-run winetricks \
 		dotnet462 \
 		vcrun2013 \
-		vcrun2017 \
+		vcrun2015 \
 	2>/dev/null && \
 	rm -rf  ~/.cache ~/.config ~/.local /tmp/*
 
