@@ -58,17 +58,17 @@ echo "RConPassword PASSWORD" > $PWD/profiles/BattlEye/beserver.cfg
 Now that we have a built image and the game data we can start the container as follows:
 
 ```bash
-docker run \
+docker run -d \
     --name=arma2oaserver \
     --net=host \
     --restart unless-stopped \
     -v arma2oaserver:/arma2oa \
-    -v $PWD/keys:/arma2oa/Arma\ 2\ Operation\ Arrowhead/Expansion/Keys \
-    -v $PWD/mpmissions:/arma2oa/Arma\ 2\ Operation\ Arrowhead/MPMissions \
-    -v $PWD/params:/arma2oa/Arma\ 2\ Operation\ Arrowhead/params \
-    -v $PWD/profiles:/arma2oa/Arma\ 2\ Operation\ Arrowhead/profiles \
-    -v $PWD/basic.cfg:/arma2oa/Arma\ 2\ Operation\ Arrowhead/basic.cfg \
-    -v $PWD/server.cfg:/arma2oa/Arma\ 2\ Operation\ Arrowhead/server.cfg \
+    -v $PWD/keys:/arma2oa/steamapps/common/Arma\ 2\ Operation\ Arrowhead/Expansion/Keys \
+    -v $PWD/mpmissions:/arma2oa/steamapps/common/Arma\ 2\ Operation\ Arrowhead/MPMissions \
+    -v $PWD/params:/arma2oa/steamapps/common/Arma\ 2\ Operation\ Arrowhead/params \
+    -v $PWD/profiles:/arma2oa/steamapps/common/Arma\ 2\ Operation\ Arrowhead/profiles \
+    -v $PWD/basic.cfg:/arma2oa/steamapps/common/Arma\ 2\ Operation\ Arrowhead/basic.cfg \
+    -v $PWD/server.cfg:/arma2oa/steamapps/common/Arma\ 2\ Operation\ Arrowhead/server.cfg \
     arma2oaserver
 ```
 
