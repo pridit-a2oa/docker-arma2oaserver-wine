@@ -45,8 +45,4 @@ MinErrorToSendNear=0.01;
 
 // (bytes) Users with custom face or custom sound larger than this size are
 // kicked when trying to connect.
-MaxCustomFileSize=0;
-
-class sockets {
-	maxPacketSize=2048;
-};
+MaxCustomFileSize=1024000;
