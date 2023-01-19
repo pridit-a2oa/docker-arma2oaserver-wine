@@ -13,7 +13,6 @@ RUN dpkg --add-architecture i386 && \
 		wget \
 		wine \
 		wine32 \
-		wine64 \
 		x11vnc \
 		xauth \
 		xvfb \
@@ -30,7 +29,9 @@ RUN winetricks sound=disabled && \
 	winetricks windowmanagermanaged=n
 
 # Install dependencies
-RUN W_OPT_UNATTENDED=1 xvfb-run winetricks \
+ENV WINEPREFIX=/dotnet
+
+RUN W_OPT_UNATTENDED=1 xvfb-run winetricks -q \
 		dotnet462 \
 		vcrun2013 \
 		vcrun2015 \

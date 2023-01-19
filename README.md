@@ -1,4 +1,6 @@
-This repository contains the files required to build an image with the dependencies to operate an **Arma 2: Operation Arrowhead** server under Wine.
+# Arma 2: Operation Arrowhead Server (Docker + Wine)
+
+This repository contains the files required to build an image with the dependencies to operate an **Arma 2: Operation Arrowhead** server using Docker and Wine.
 
 ## Requirements
 * [Steam](https://store.steampowered.com/about/) account with an active subscription to the game (optionally Arma 2 as well, if you use the content).
@@ -16,14 +18,14 @@ Build the image so we can use it later:
 docker build -t arma2oaserver .
 ```
 
-### Game Content
+### Download
 This image does not contain any data files, given that they can not be downloaded without an active subscription to the packages on Steam.
 
-For this purpose, I would recommend leveraging the official [SteamCMD](https://hub.docker.com/r/steamcmd/steamcmd) Docker image and having that content ready (or merged if sharing assets) before building and using this image.
+For this purpose, I would recommend leveraging the official [SteamCMD](https://hub.docker.com/r/steamcmd/steamcmd) Docker image and having that content ready (or merged if sharing assets) before moving further.
 
 ```bash
 docker run -it \
-    -v arma2oaserver:/root/.steam \
+    -v arma2oaserver:/root/Steam \
     steamcmd/steamcmd:latest \
     +@sSteamCmdForcePlatformType windows \
     +login USERNAME PASSWORD \
@@ -32,28 +34,27 @@ docker run -it \
     +quit
 ```
 
->Arma 2 is under two different package App IDs. **33910** (RoW) and **33900** (bought on Steam). Depending on how your Steam account owns Arma 2 this may need to change.
+Once authenticated you will be presented with a prompt inside the container.
 
->Due to quirks, the command may need to be executed multiple times (another reason the downloads aren't included as part of this repo).
-
-Directories you are going to want to merge from `Arma 2` into `Arma 2 Operation Arrowhead` to support shared content are as follows:
-
-- AddOns
-- Dta
-
-### RCON
-
-Before we are finished the last thing to do is create a `beserver.cfg` file, to ensure RCON capability.
-
-Create this like so, replacing with a password of your preference:
+To download Arma 2: Operation Arrowhead content:
 
 ```bash
-echo "RConPassword PASSWORD" > $PWD/profiles/BattlEye/beserver.cfg
+app_update 33930
 ```
 
->This file will be automatically renamed when it is used to signify that it is active.
+To download Arma 2 content:
 
-### Ready
+```bash
+app_update 33900
+```
+
+>Arma 2 is under two different package App IDs. **33910** (RoW) and **33900** (bought on Steam). Depending on how your Steam account owns Arma 2 this may need to change.
+
+>Due to quirks with either the package or SteamCMD, the process may fail and would need to be executed repeatedly.
+
+Once this has downloaded you can exit the prompt with `quit` and move on.
+
+### Container
 
 Now that we have a built image and the game data we can start the container as follows:
 
@@ -62,7 +63,7 @@ docker run -d \
     --name=arma2oaserver \
     --net=host \
     --restart unless-stopped \
-    -v arma2oaserver:/arma2oa \
+    -v arma2oa:/arma2oa \
     -v $PWD/keys:/arma2oa/steamapps/common/Arma\ 2\ Operation\ Arrowhead/Expansion/Keys \
     -v $PWD/mpmissions:/arma2oa/steamapps/common/Arma\ 2\ Operation\ Arrowhead/MPMissions \
     -v $PWD/params:/arma2oa/steamapps/common/Arma\ 2\ Operation\ Arrowhead/params \
@@ -71,6 +72,34 @@ docker run -d \
     -v $PWD/server.cfg:/arma2oa/steamapps/common/Arma\ 2\ Operation\ Arrowhead/server.cfg \
     arma2oaserver
 ```
+
+## Shared Content
+
+To support shared content directories you are going to want to merge from `Arma 2` into `Arma 2 Operation Arrowhead` are the following:
+
+- AddOns
+- Dta
+
+## RCON
+
+Create a `beserver.cfg` file to ensure RCON capability. Replace **PASSWORD** with one of your choosing as per the below:
+
+```bash
+echo "RConPassword PASSWORD" > $PWD/profiles/BattlEye/beserver.cfg
+```
+
+>This file will be automatically renamed when it is used to signify that it is active.
+
+## VNC
+As the executable window outputs the RCON password every time it starts up, it is pretty important that this is secured.
+
+You can do this by accessing the container and running:
+
+```bash
+x11vnc -storepasswd
+```
+
+VNC will not start up unless this has been set.
 
 ## Attribution
 With thanks to [adamharley/torch-docker](https://github.com/adamharley/torch-docker) from which this repository is loosely based from.
