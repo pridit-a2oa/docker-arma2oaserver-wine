@@ -36,13 +36,13 @@ Once authenticated you will be presented with a prompt inside the container.
 To download Arma 2: Operation Arrowhead content:
 
 ```bash
-app_update 33930
+app_update 33930 validate
 ```
 
 To download Arma 2 content:
 
 ```bash
-app_update 33900
+app_update 33900 validate
 ```
 
 >Arma 2 is under two different package App IDs. **33910** (RoW) and **33900** (bought on Steam). Depending on how your Steam account owns Arma 2 this may need to change.
@@ -96,7 +96,7 @@ You can do this by accessing the container and running:
 x11vnc -storepasswd
 ```
 
-VNC will not start up unless this has been set.
+>VNC will not start up unless this has been set.
 
 ## Attribution
 With thanks to [adamharley/torch-docker](https://github.com/adamharley/torch-docker) from which this repository is loosely based from.
