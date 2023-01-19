@@ -28,10 +28,7 @@ docker run -it \
     -v arma2oaserver:/root/Steam \
     steamcmd/steamcmd:latest \
     +@sSteamCmdForcePlatformType windows \
-    +login USERNAME PASSWORD \
-    +app_update 33930 \
-    +app_update 33900 \
-    +quit
+    +login USERNAME PASSWORD
 ```
 
 Once authenticated you will be presented with a prompt inside the container.
