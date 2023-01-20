@@ -12,7 +12,6 @@ RUN dpkg --add-architecture i386 && \
 		wget \
 		wine \
 		wine32 \
-		wine64 \
 		xauth \
 		xvfb \
 		unzip && \
