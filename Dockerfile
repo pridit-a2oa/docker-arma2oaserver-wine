@@ -26,7 +26,8 @@ RUN winetricks sound=disabled && \
 	winetricks windowmanagermanaged=n
 
 # Install dependencies
-ENV WINEPREFIX=/dotnet
+ENV WINEPREFIX=/wine32
+ENV WINEARCH=win32
 
 RUN W_OPT_UNATTENDED=1 xvfb-run winetricks -q \
 		dotnet462 \
