@@ -87,16 +87,5 @@ echo "RConPassword PASSWORD" > $PWD/profiles/BattlEye/beserver.cfg
 
 >This file will be automatically renamed when it is used to signify that it is active.
 
-## VNC
-As the executable window outputs the RCON password every time it starts up, it is pretty important that this is secured.
-
-You can do this by accessing the container and running:
-
-```bash
-x11vnc -storepasswd
-```
-
->VNC will not start up unless this has been set.
-
 ## Attribution
 With thanks to [adamharley/torch-docker](https://github.com/adamharley/torch-docker) from which this repository is loosely based from.

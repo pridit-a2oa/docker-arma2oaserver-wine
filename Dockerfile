@@ -7,18 +7,16 @@ RUN dpkg --add-architecture i386 && \
 		ca-certificates \
 		cabextract \
 		net-tools \
-		novnc \
 		procps \
 		supervisor \
 		wget \
 		wine \
 		wine32 \
-		x11vnc \
+		wine64 \
 		xauth \
 		xvfb \
 		unzip && \
-	apt-get clean && rm -rf /var/lib/apt/lists/* && \
-	ln -s /usr/share/novnc/vnc_lite.html /usr/share/novnc/index.html
+	apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Download Winetricks
 RUN wget https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks -O /usr/bin/winetricks && \
