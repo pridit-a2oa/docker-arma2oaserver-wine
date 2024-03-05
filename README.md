@@ -45,9 +45,11 @@ To download Arma 2 content:
 app_update 33900 validate
 ```
 
->Arma 2 is under two different package App IDs. **33910** (RoW) and **33900** (bought on Steam). Depending on how your Steam account owns Arma 2 this may need to change.
+> [!NOTE]
+> Arma 2 is under two different package App IDs. **33910** (RoW) and **33900** (bought on Steam). Depending on how your Steam account owns Arma 2 this may need to change.
 
->Due to quirks with either the package or SteamCMD, the process may fail and would need to be executed repeatedly.
+> [!WARNING]
+> Due to quirks with either the package or SteamCMD, the process may fail and would need to be executed repeatedly.
 
 Once this has downloaded you can exit the prompt with `quit` and move on.
 
@@ -85,7 +87,8 @@ Create a `beserver.cfg` file to ensure RCON capability. Replace **PASSWORD** wit
 echo "RConPassword PASSWORD" > $PWD/profiles/BattlEye/beserver.cfg
 ```
 
->This file will be automatically renamed when it is used to signify that it is active.
+> [!NOTE]
+> This file will be automatically renamed when it is used to signify that it is active.
 
 ## Attribution
 With thanks to [adamharley/torch-docker](https://github.com/adamharley/torch-docker) from which this repository is loosely based from.
