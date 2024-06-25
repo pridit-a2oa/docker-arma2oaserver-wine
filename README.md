@@ -1,31 +1,44 @@
-# Arma 2: Operation Arrowhead Server (Docker + Wine)
+# Arma 2: Operation Arrowhead Server
 
-This repository contains the files required to build an image with the dependencies to operate an **Arma 2: Operation Arrowhead** server using Docker and Wine.
+This repository contains the files required to build an image with the dependencies to operate an **Arma 2: Operation Arrowhead** server, leveraging Docker and Wine.
 
 ## Requirements
-* [Steam](https://store.steampowered.com/about/) account with an active subscription to the game (optionally Arma 2 as well, if you use the content).
+
+- [Steam](https://store.steampowered.com/about/) account owning the game
 
 ## Setup
+
 ```bash
 git clone https://github.com/pridit/docker-arma2oaserver-wine.git
 ```
 
 Make a copy of the three `.example` files, removing this suffix, and modify server configuration with your own preferences.
 
-Build the image so we can use it later:
+Start by building the image so we can use it later:
 
 ```bash
 docker build -t arma2oaserver .
 ```
 
-### Download
+> [!NOTE]
+> It is normal for the image build process to take some time, potentially up to 15 minutes.
+
+### Game Content
+
 This image does not contain any data files, given that they can not be downloaded without an active subscription to the packages on Steam.
 
-For this purpose, I would recommend leveraging the official [SteamCMD](https://hub.docker.com/r/steamcmd/steamcmd) Docker image and having that content ready (or merged if sharing assets) before moving further.
+For this purpose, I would recommend leveraging the official [SteamCMD](https://hub.docker.com/r/steamcmd/steamcmd) Docker image and having that content ready/[merged](#shared-content) (if using assets from Arma 2).
+
+> [!IMPORTANT]
+> This data needs to exist before starting the container, however you choose to do that. If you already have game data in a volume, this section can be skipped.
+
+```bash
+docker volume create arma2oa
+```
 
 ```bash
 docker run -it \
-    -v arma2oaserver:/root/Steam \
+    -v arma2oa:/root/Steam \
     steamcmd/steamcmd:latest \
     +@sSteamCmdForcePlatformType windows \
     +login USERNAME PASSWORD
@@ -46,16 +59,16 @@ app_update 33900 validate
 ```
 
 > [!NOTE]
-> Arma 2 is under two different package App IDs. **33910** (RoW) and **33900** (bought on Steam). Depending on how your Steam account owns Arma 2 this may need to change.
+> Arma 2 exists under two different package App IDs. [33910](https://steamdb.info/app/33910/) (RoW) and [33900](https://steamdb.info/app/33900/) (bought directly on Steam). Depending on how your Steam account owns Arma 2 the command line may need to change.
 
 > [!WARNING]
-> Due to quirks with either the package or SteamCMD, the process may fail and would need to be executed repeatedly.
+> Due to quirks with either the package or SteamCMD, the process may fail and would need to be executed repeatedly to complete.
 
 Once this has downloaded you can exit the prompt with `quit` and move on.
 
 ### Container
 
-Now that we have a built image and the game data we can start the container as follows:
+Now that we have a built image and a volume with the game data we can start the container as follows:
 
 ```bash
 docker run -d \
@@ -81,14 +94,15 @@ To support shared content directories you are going to want to merge from `Arma 
 
 ## RCON
 
-Create a `beserver.cfg` file to ensure RCON capability. Replace **PASSWORD** with one of your choosing as per the below:
+To enable RCON we need to create a new file called `beserver.cfg` as per the below:
 
 ```bash
-echo "RConPassword PASSWORD" > $PWD/profiles/BattlEye/beserver.cfg
+echo "RConPassword CHANGEME" > $PWD/profiles/BattlEye/beserver.cfg
 ```
 
 > [!NOTE]
-> This file will be automatically renamed when it is used to signify that it is active.
+> This file will be automatically renamed, signifying that it is active.
 
 ## Attribution
-With thanks to [adamharley/torch-docker](https://github.com/adamharley/torch-docker) from which this repository is loosely based from.
+
+With thanks to [adamharley/torch-docker](https://github.com/adamharley/torch-docker), from which this repository is loosely based from.
