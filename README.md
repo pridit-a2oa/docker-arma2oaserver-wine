@@ -1,6 +1,9 @@
 # Arma 2: Operation Arrowhead Server
 
-This repository contains the files required to build an image with the dependencies to operate an **Arma 2: Operation Arrowhead** server, leveraging Docker and Wine.
+This repository contains the files required to build an image with the dependencies to operate an **Arma 2: Operation Arrowhead** server, using [Docker](https://www.docker.com/) and [Wine](https://www.winehq.org/) to achieve this.
+
+> [!NOTE]
+> These instructions assume basic understanding of `git` and `docker` CLI use, that you have a Linux environment capable of executing these commands, and a disk with at least **10 GB** of available space.
 
 ## Requirements
 
@@ -25,7 +28,7 @@ docker build -t arma2oaserver .
 
 ### Game Content
 
-This image does not contain any data files, given that they can not be downloaded without an active subscription to the packages on Steam.
+This image does not contain any data files, given that this is licensed content that cannot be downloaded without an active subscription to the packages on Steam. As a result, we'll be mounting a Docker volume at runtime.
 
 For this purpose, I would recommend leveraging the official [SteamCMD](https://hub.docker.com/r/steamcmd/steamcmd) Docker image and having that content ready/[merged](#shared-content) (if using assets from Arma 2).
 
@@ -46,6 +49,9 @@ docker run -it \
 
 Once authenticated you will be presented with a prompt inside the container.
 
+> [!WARNING]
+> Due to quirks with either the package or SteamCMD, the download process may erroneously fail and in such cases the following commands must be executed repeatedly to complete.
+
 To download Arma 2: Operation Arrowhead content:
 
 ```bash
@@ -61,9 +67,6 @@ app_update 33900 validate
 > [!NOTE]
 > Arma 2 exists under two different package App IDs. [33910](https://steamdb.info/app/33910/) (RoW) and [33900](https://steamdb.info/app/33900/) (bought directly on Steam). Depending on how your Steam account owns Arma 2 the command line may need to change.
 
-> [!WARNING]
-> Due to quirks with either the package or SteamCMD, the process may fail and would need to be executed repeatedly to complete.
-
 Once this has downloaded you can exit the prompt with `quit` and move on.
 
 ### Container
@@ -78,6 +81,7 @@ docker run -d \
     -v arma2oa:/arma2oa \
     -v $PWD/keys:/arma2oa/steamapps/common/Arma\ 2\ Operation\ Arrowhead/Expansion/Keys \
     -v $PWD/mpmissions:/arma2oa/steamapps/common/Arma\ 2\ Operation\ Arrowhead/MPMissions \
+    -v $PWD/logs:/arma2oa/steamapps/common/Arma\ 2\ Operation\ Arrowhead/logs \
     -v $PWD/params:/arma2oa/steamapps/common/Arma\ 2\ Operation\ Arrowhead/params \
     -v $PWD/profiles:/arma2oa/steamapps/common/Arma\ 2\ Operation\ Arrowhead/profiles \
     -v $PWD/basic.cfg:/arma2oa/steamapps/common/Arma\ 2\ Operation\ Arrowhead/basic.cfg \
@@ -101,7 +105,7 @@ echo "RConPassword CHANGEME" > $PWD/profiles/BattlEye/beserver.cfg
 ```
 
 > [!NOTE]
-> This file will be automatically renamed, signifying that it is active.
+> This file will be automatically renamed.
 
 ## Attribution
 
