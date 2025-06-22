@@ -41,7 +41,7 @@ docker volume create arma2oa
 
 ```bash
 docker run -it \
-    -v arma2oa:/root/Steam \
+    -v arma2oa:/root/.local/share/Steam \
     steamcmd/steamcmd:latest \
     +@sSteamCmdForcePlatformType windows \
     +login USERNAME PASSWORD
