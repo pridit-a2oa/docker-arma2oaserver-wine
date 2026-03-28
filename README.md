@@ -89,6 +89,10 @@ docker run -d \
     arma2oaserver
 ```
 
+
+> [!NOTE]
+> Due to dynamic port assignment, the `host` network is used. If you would prefer to use a custom network instead then you can determine the necessary ports by accessing the container and executing `netstat -anu`. By default, any ports in the 4-digit format starting with `2` must be exposed.
+
 ## Shared Content
 
 To support shared content directories you are going to want to merge from `Arma 2` into `Arma 2 Operation Arrowhead` are the following:
